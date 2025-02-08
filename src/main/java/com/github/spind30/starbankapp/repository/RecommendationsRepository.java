@@ -21,12 +21,47 @@ public class RecommendationsRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public int getRandomTransactionAmount(UUID user){
+    // Создаём метод получения количества транзакций
+    public int getTransactionCount(UUID userId, String productType) {
         Integer result = jdbcTemplate.queryForObject(
-                "SELECT amount FROM transactions t WHERE t.user_id = ? LIMIT 1",
+                "SELECT COUNT(t.AMOUNT) " +
+                        "FROM transactions t " +
+                        "JOIN products p ON t.product_id = p.id " +
+                        "WHERE t.user_id = ? " + // добавляем параметр для id пользователя
+                        "  AND p.type = ?;", // добавляем параметр для тип продукта
                 Integer.class,
-                user);
+                userId,  // первый параметр — userId
+                productType);  // второй параметр — productType
         return result != null ? result : 0;
     }
 
+    // Создаём метод получения суммы по пополнениям в продукте определённого типа
+    public long getDepositAmount(UUID userId, String productType) {
+        Long result = jdbcTemplate.queryForObject(
+                "SELECT SUM(t.AMOUNT) " +
+                        "FROM transactions t " +
+                        "JOIN products p ON t.product_id = p.id " +
+                        "WHERE t.user_id = ? " +  // добавляем параметр для id пользователя
+                        "AND p.type = ? " +  // добавляем параметр для типа продукта
+                        "AND t.type = 'DEPOSIT';",  // фильтрация по типу транзакции
+                Long.class,
+                userId,  // первый параметр — userId
+                productType);  // второй параметр — productType
+        return result != null ? result : 0L;
+    }
+
+    // Создаём метод получения суммы по снятиям в продукте определённого типа
+    public long getWithdrawAmount(UUID userId, String productType) {
+        Long result = jdbcTemplate.queryForObject(
+                "SELECT SUM(t.AMOUNT) " +
+                        "FROM transactions t " +
+                        "JOIN products p ON t.product_id = p.id " +
+                        "WHERE t.user_id = ? " +  // добавляем параметр для id пользователя
+                        "AND p.type = ? " +  // добавляем параметр для типа продукта
+                        "AND t.type = 'WITHDRAW';",  // фильтрация по типу транзакции
+                Long.class,
+                userId,  // первый параметр — userId
+                productType);  // второй параметр — productType
+        return result != null ? result : 0L;
+    }
 }
