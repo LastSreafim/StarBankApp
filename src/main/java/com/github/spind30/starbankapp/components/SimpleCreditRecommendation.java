@@ -8,6 +8,7 @@ import ruleset.RecommendationRuleSet;
 
 import java.util.Optional;
 import java.util.UUID;
+
 //Создаём компонент интерфейса для рекомендации Простой кредит
 @Component
 @AllArgsConstructor
@@ -21,7 +22,7 @@ public class SimpleCreditRecommendation implements RecommendationRuleSet {
                 getTransactionAmount(userId, "DEBIT", "DEPOSIT");
         long sumWithdrawDebit = recommendationsRepository.
                 getTransactionAmount(userId, "DEBIT", "WITHDRAW");
-        if (countCredit == 0 & sumWithdrawDebit<sumDepositDebit & sumWithdrawDebit > 100_000) {
+        if (countCredit == 0 & sumWithdrawDebit < sumDepositDebit & sumWithdrawDebit > 100_000) {
             return Optional.of(new RecommendationDTO(
                     UUID.randomUUID(), //генерирует рандомный id для типа рекомендации
                     "Простой кредит",

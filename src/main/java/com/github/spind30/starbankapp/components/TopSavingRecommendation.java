@@ -8,45 +8,46 @@ import ruleset.RecommendationRuleSet;
 
 import java.util.Optional;
 import java.util.UUID;
+
 //Создаём компонент интерфейса для рекомендации Top Saving
 @Component
 @AllArgsConstructor
 public class TopSavingRecommendation implements RecommendationRuleSet {
     private final RecommendationsRepository recommendationsRepository;
 
-        @Override
-        public Optional<RecommendationDTO> getRecommendation(UUID userId) {
-            int countDebit = recommendationsRepository.getTransactionCount(userId, "DEBIT");
-            long sumDepositDebit = recommendationsRepository.
-                    getTransactionAmount(userId, "DEBIT", "DEPOSIT");
-            long sumDepositSaving = recommendationsRepository.
-                    getTransactionAmount(userId, "SAVING", "DEPOSIT");
-            long sumWithdrawDebit = recommendationsRepository.
-                    getTransactionAmount(userId, "DEBIT", "WITHDRAW");
-            if (countDebit > 0 & (sumDepositSaving > 50000 || sumDepositDebit > 50000)
-                    & sumWithdrawDebit<sumDepositDebit) {
-                return Optional.of(new RecommendationDTO(
-                        UUID.randomUUID(), //генерирует рандомный id для типа рекомендации
-                        "Top Saving",
-                        "Откройте свою собственную «Копилку» с нашим банком! " +
-                                "«Копилка» — это уникальный банковский инструмент, " +
-                                "который поможет вам легко и удобно накапливать деньги на важные цели. " +
-                                "Больше никаких забытых чеков и потерянных квитанций — всё под контролем!" +
-                                "\n" +
-                                "Преимущества «Копилки»:\n" +
-                                "\n" +
-                                "Накопление средств на конкретные цели. " +
-                                "Установите лимит и срок накопления, и банк будет автоматически переводить определенную сумму на ваш счет.\n" +
-                                "\n" +
-                                "Прозрачность и контроль. Отслеживайте свои доходы и расходы, " +
-                                "контролируйте процесс накопления и корректируйте стратегию при необходимости.\n" +
-                                "\n" +
-                                "Безопасность и надежность. Ваши средства находятся под защитой банка, " +
-                                "а доступ к ним возможен только через мобильное приложение или интернет-банкинг.\n" +
-                                "\n" +
-                                "Начните использовать «Копилку» уже сегодня и станьте ближе к своим финансовым целям!"
-                ));
-            }
-            return Optional.empty();
+    @Override
+    public Optional<RecommendationDTO> getRecommendation(UUID userId) {
+        int countDebit = recommendationsRepository.getTransactionCount(userId, "DEBIT");
+        long sumDepositDebit = recommendationsRepository.
+                getTransactionAmount(userId, "DEBIT", "DEPOSIT");
+        long sumDepositSaving = recommendationsRepository.
+                getTransactionAmount(userId, "SAVING", "DEPOSIT");
+        long sumWithdrawDebit = recommendationsRepository.
+                getTransactionAmount(userId, "DEBIT", "WITHDRAW");
+        if (countDebit > 0 & (sumDepositSaving > 50000 || sumDepositDebit > 50000)
+                & sumWithdrawDebit < sumDepositDebit) {
+            return Optional.of(new RecommendationDTO(
+                    UUID.randomUUID(), //генерирует рандомный id для типа рекомендации
+                    "Top Saving",
+                    "Откройте свою собственную «Копилку» с нашим банком! " +
+                            "«Копилка» — это уникальный банковский инструмент, " +
+                            "который поможет вам легко и удобно накапливать деньги на важные цели. " +
+                            "Больше никаких забытых чеков и потерянных квитанций — всё под контролем!" +
+                            "\n" +
+                            "Преимущества «Копилки»:\n" +
+                            "\n" +
+                            "Накопление средств на конкретные цели. " +
+                            "Установите лимит и срок накопления, и банк будет автоматически переводить определенную сумму на ваш счет.\n" +
+                            "\n" +
+                            "Прозрачность и контроль. Отслеживайте свои доходы и расходы, " +
+                            "контролируйте процесс накопления и корректируйте стратегию при необходимости.\n" +
+                            "\n" +
+                            "Безопасность и надежность. Ваши средства находятся под защитой банка, " +
+                            "а доступ к ним возможен только через мобильное приложение или интернет-банкинг.\n" +
+                            "\n" +
+                            "Начните использовать «Копилку» уже сегодня и станьте ближе к своим финансовым целям!"
+            ));
         }
+        return Optional.empty();
     }
+}
