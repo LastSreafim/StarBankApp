@@ -8,9 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ruleset.RecommendationRuleSet;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -22,15 +21,33 @@ public class RecommendationService {
 
     private final RecommendationsRepository recommendationsRepository;
 
-    public List<RecommendationDTO> getRecommendations(UUID userId) {
-        logger.info("Получаем рекомендации для пользователя {}", userId);
+    //Здесь оставлю код, который был до этого для ознакомления,
+    // , полезно увидеть разницу и потестировать в случае надобности
+
+//    public List<RecommendationDTO> getRecommendations(UUID userId) {
+//        logger.info("Получаем рекомендации для пользователя {}", userId);
+//        List<RecommendationDTO> recommendations = new ArrayList<>();
+//        for (RecommendationRuleSet rule : recommendationRules) {
+//            rule.getRecommendation(userId)
+//                    .ifPresent(recommendations::add);
+//        }
+//        logger.info("Найдено {} рекомендаций", recommendations.size());
+//        return recommendations;
+//    }
+
+    public Map<String, Object> getRecommendations(UUID userId) {
         List<RecommendationDTO> recommendations = new ArrayList<>();
         for (RecommendationRuleSet rule : recommendationRules) {
             rule.getRecommendation(userId)
                     .ifPresent(recommendations::add);
         }
         logger.info("Найдено {} рекомендаций", recommendations.size());
-        return recommendations;
+        Map<String, Object> result = new LinkedHashMap<>(); // Использую LinkedHashMap, чтобы упорядочить ключи в мапе
+        result.put("user_id", userId);
+        result.put("recommendations", recommendations);
+
+        return result;
     }
+
 
 }

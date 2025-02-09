@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -18,10 +19,9 @@ import java.util.UUID;
 public class RecommendationController {
     private final RecommendationService recommendationService;
 
-    @GetMapping(value = "/{userId}")
-    public ResponseEntity<List<RecommendationDTO>> getRecommendations(@PathVariable UUID userId) {
-        List<RecommendationDTO> recommendations = recommendationService.getRecommendations(userId);
-        return ResponseEntity.ok(recommendations);
+    @GetMapping("/{userId}")
+    public ResponseEntity<Map<String, Object>> getRecommendations(@PathVariable UUID userId) {
+        return ResponseEntity.ok(recommendationService.getRecommendations(userId));
     }
 
 }
