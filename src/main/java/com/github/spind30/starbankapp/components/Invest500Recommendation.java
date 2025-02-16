@@ -1,6 +1,6 @@
 package com.github.spind30.starbankapp.components;
 
-import com.github.spind30.starbankapp.dto.RecommendationDTO;
+import com.github.spind30.starbankapp.model.Recommendation;
 import com.github.spind30.starbankapp.repository.RecommendationsRepository;
 import org.springframework.stereotype.Component;
 import ruleset.RecommendationRuleSet;
@@ -17,14 +17,14 @@ public class Invest500Recommendation implements RecommendationRuleSet {
     private final RecommendationsRepository recommendationsRepository;
 
     @Override
-    public Optional<RecommendationDTO> getRecommendation(UUID userId) {
+    public Optional<Recommendation> getRecommendation(UUID userId) {
         int countDebit = recommendationsRepository.getTransactionCount(userId, "DEBIT");
         int countInvest = recommendationsRepository.getTransactionCount(userId, "INVEST");
         long sumDepositSaving = recommendationsRepository.getTransactionAmount(userId, "SAVING", "DEPOSIT");
         if (countDebit > 0 & countInvest == 0 & sumDepositSaving > 1000) {
-            return Optional.of(new RecommendationDTO(
-                    UUID.randomUUID(), //генерирует рандомный id для типа рекомендации
+            return Optional.of(new Recommendation(
                     "Invest500",
+                    UUID.fromString("147f6a0f-3b91-413b-ab99-87f081d60d5a"),
                     "Откройте свой путь к успеху с " +
                             "индивидуальным инвестиционным счетом (ИИС) от нашего банка! " +
                             "Воспользуйтесь налоговыми льготами и начните инвестировать с умом. " +

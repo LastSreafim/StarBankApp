@@ -1,6 +1,6 @@
 package com.github.spind30.starbankapp.components;
 
-import com.github.spind30.starbankapp.dto.RecommendationDTO;
+import com.github.spind30.starbankapp.model.Recommendation;
 import com.github.spind30.starbankapp.repository.RecommendationsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ public class TopSavingRecommendation implements RecommendationRuleSet {
     private final RecommendationsRepository recommendationsRepository;
 
     @Override
-    public Optional<RecommendationDTO> getRecommendation(UUID userId) {
+    public Optional<Recommendation> getRecommendation(UUID userId) {
         int countDebit = recommendationsRepository.getTransactionCount(userId, "DEBIT");
         long sumDepositDebit = recommendationsRepository.
                 getTransactionAmount(userId, "DEBIT", "DEPOSIT");
@@ -26,9 +26,9 @@ public class TopSavingRecommendation implements RecommendationRuleSet {
                 getTransactionAmount(userId, "DEBIT", "WITHDRAW");
         if (countDebit > 0 & (sumDepositSaving > 50000 || sumDepositDebit > 50000)
                 & sumWithdrawDebit < sumDepositDebit) {
-            return Optional.of(new RecommendationDTO(
-                    UUID.randomUUID(), //генерирует рандомный id для типа рекомендации
+            return Optional.of(new Recommendation(
                     "Top Saving",
+                    UUID.fromString("59efc529-2fff-41af-baff-90ccd7402925"),
                     "Откройте свою собственную «Копилку» с нашим банком! " +
                             "«Копилка» — это уникальный банковский инструмент, " +
                             "который поможет вам легко и удобно накапливать деньги на важные цели. " +

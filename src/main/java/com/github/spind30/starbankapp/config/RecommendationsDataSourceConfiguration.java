@@ -9,11 +9,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
-/*
+/**
     DataBase H2
     Класс с конфигурацией источника данных.
  */
-
 @Configuration
 public class RecommendationsDataSourceConfiguration {
 

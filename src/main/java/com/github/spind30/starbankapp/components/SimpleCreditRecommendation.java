@@ -1,6 +1,6 @@
 package com.github.spind30.starbankapp.components;
 
-import com.github.spind30.starbankapp.dto.RecommendationDTO;
+import com.github.spind30.starbankapp.model.Recommendation;
 import com.github.spind30.starbankapp.repository.RecommendationsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,16 +16,16 @@ public class SimpleCreditRecommendation implements RecommendationRuleSet {
     private final RecommendationsRepository recommendationsRepository;
 
     @Override
-    public Optional<RecommendationDTO> getRecommendation(UUID userId) {
+    public Optional<Recommendation> getRecommendation(UUID userId) {
         int countCredit = recommendationsRepository.getTransactionCount(userId, "CREDIT");
         long sumDepositDebit = recommendationsRepository.
                 getTransactionAmount(userId, "DEBIT", "DEPOSIT");
         long sumWithdrawDebit = recommendationsRepository.
                 getTransactionAmount(userId, "DEBIT", "WITHDRAW");
         if (countCredit == 0 & sumWithdrawDebit < sumDepositDebit & sumWithdrawDebit > 100_000) {
-            return Optional.of(new RecommendationDTO(
-                    UUID.randomUUID(), //генерирует рандомный id для типа рекомендации
+            return Optional.of(new Recommendation(
                     "Простой кредит",
+                    UUID.fromString("ab138afb-f3ba-4a93-b74f-0fcee86d447f"),
                     "Откройте мир выгодных кредитов с нами!\n" +
                             "\n" +
                             "Ищете способ быстро и без лишних хлопот получить нужную сумму? " +
