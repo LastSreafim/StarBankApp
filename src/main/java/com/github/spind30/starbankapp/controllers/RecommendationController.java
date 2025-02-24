@@ -19,11 +19,4 @@ public class RecommendationController {
     public ResponseEntity<RecommendationDTO> getRecommendations(@PathVariable UUID userId) {
         return ResponseEntity.ok(recommendationService.getRecommendations(userId));
     }
-
-    @PostMapping
-    public ResponseEntity<Recommendation> createRecommendation(@RequestBody Recommendation recommendation) {
-        System.out.println(recommendation);
-        return ResponseEntity.ok().build();
-    }
-
 }
