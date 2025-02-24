@@ -3,3 +3,5 @@ databaseChangeLog:
       file: liquibase/scripts/recommendations.sql
   - include:
       file: liquibase/scripts/rules.sql
+  - include:
+      file: liquibase/scripts/rules_arguments.sql

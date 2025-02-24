@@ -1,7 +1,7 @@
 -- liquibase formatted sql
 
 --changeset antonio.brightside:1
-CREATE EXTENSION IF NOT EXISTS "pgcrypto"; --для подключения функции рандомизации UUID
+CREATE EXTENSION IF NOT EXISTS "pgcrypto"; --для подключения функции генерации UUID
 
 CREATE TABLE rules (
     rule_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
