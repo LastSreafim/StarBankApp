@@ -1,5 +1,7 @@
 package com.github.spind30.starbankapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,14 +20,13 @@ public class Rule {
     private UUID rule_id;
 
     @ManyToOne
-    @JoinColumn(name="product_id")
+    @JoinColumn(name="product_id", referencedColumnName = "product_id")
     private Recommendation recommendation;
 
     private String query;
 
-    //@ElementCollection
-    //@CollectionTable(name = "rules_arguments", joinColumns = @JoinColumn(name="rule"))
-    @OneToMany(mappedBy = "rule", cascade = CascadeType.ALL)
-    private List<Argument> arguments;
+    @ElementCollection
+    @CollectionTable(name = "rules_arguments", joinColumns = @JoinColumn(name="rule_id"))
+    private List<String> arguments;
     private boolean negate;
 }

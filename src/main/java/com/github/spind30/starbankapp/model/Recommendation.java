@@ -1,5 +1,6 @@
 package com.github.spind30.starbankapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,9 +17,7 @@ public class Recommendation {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID product_id;
-    @Column(name = "product_name")
     private String name;
-    @Column(name = "product_text")
     private String text;
 
     @OneToMany(mappedBy = "recommendation", cascade = CascadeType.ALL)
