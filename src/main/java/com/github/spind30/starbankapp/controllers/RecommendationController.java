@@ -19,4 +19,6 @@ public class RecommendationController {
     public ResponseEntity<RecommendationDTO> getRecommendations(@PathVariable UUID userId) {
         return ResponseEntity.ok(recommendationService.getRecommendations(userId));
     }
+
+
 }

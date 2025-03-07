@@ -1,7 +1,7 @@
 package com.github.spind30.starbankapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.spind30.starbankapp.model.Recommendation;
+import com.github.spind30.starbankapp.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,8 +11,8 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class RecommendationDTO {
+public class PersonalRecommendationDTO {
     @JsonProperty("user_id")
     UUID userId;
-    List<Recommendation> recommendations = new ArrayList<>();
+    List<Product> recommendations = new ArrayList<>();
 }

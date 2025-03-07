@@ -1,13 +1,12 @@
 package com.github.spind30.starbankapp.controllers;
 
-import com.github.spind30.starbankapp.model.Recommendation;
 import com.github.spind30.starbankapp.services.RuleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/rule")
@@ -17,9 +16,21 @@ public class RuleController {
     private final RuleService ruleService;
 
     @PostMapping
-    public ResponseEntity<Recommendation> createRule(@RequestBody Recommendation recommendation) {
-        ruleService.createRule(recommendation);
+    public ResponseEntity<Rule> createRule(@RequestBody Rule rule) {
+        ruleService.createRule(rule);
         return ResponseEntity.ok().build();
     }
 
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRule(@PathVariable UUID id) {
+        ruleService.deleteRule(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Rule>> getAllRules() {
+        List<Rule> rules = ruleService.getAllRules();
+        return ResponseEntity.ok(rules);
+    }
 }
