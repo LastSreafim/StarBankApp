@@ -1,19 +1,14 @@
-package com.github.spind30.starbankapp.model.rule;
+package com.github.spind30.starbankapp.model.queries;
 
-import com.github.spind30.starbankapp.model.Rule;
 import com.github.spind30.starbankapp.model.enums.BankProductType;
 import com.github.spind30.starbankapp.model.enums.CompareType;
 import com.github.spind30.starbankapp.model.enums.OperationType;
 
-public class RuleCompareSum extends RuleArguments implements Rule {
+public class RuleCompareSum extends RuleArguments {
 
     private BankProductType productType;
     private OperationType operationType;
     private CompareType compareType;
-    private int amount;
+    private long amount;
 
-    @Override
-    public String getSubQuery() {
-        return "";
-    }
 }
