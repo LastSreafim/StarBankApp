@@ -25,16 +25,12 @@ public class Query {
     @Enumerated(EnumType.STRING)
     private QueryType queryType;
 
-    @ManyToMany
-    @JoinTable(
-            name = "query_arguments",
-            joinColumns = @JoinColumn(name = "query_id"),
-            inverseJoinColumns = @JoinColumn(name = "argument_id")
-    )
-    private List<RuleArguments> arguments;
+    private List<String> arguments;
 
-    @ManyToMany(mappedBy = "rules")
-    private List<DynamicRule> dynamicRules;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dynamic_rule_id")
+    @JsonIgnore
+    private DynamicRule dynamicRule;
 
     private boolean negate;
 }

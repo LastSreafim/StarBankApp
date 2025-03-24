@@ -22,13 +22,6 @@ public class DynamicRule {
     private String productText;
 
 
-    @ManyToMany
-    @JoinTable(
-            name = "dynamic_rule_query",  // Таблица для связи
-            joinColumns = @JoinColumn(name = "dynamic_rule_id", referencedColumnName = "productId"),
-            // Внешний ключ для dynamic_rule с указанием productId
-            inverseJoinColumns = @JoinColumn(name = "query_id")
-            // Внешний ключ для query
-    )
+    @OneToMany(mappedBy = "dynamicRule", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Query> rules;
 }

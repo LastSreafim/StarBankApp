@@ -1,6 +1,5 @@
 package com.github.spind30.starbankapp.dto;
 
-import com.github.spind30.starbankapp.model.Rule;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,5 +12,5 @@ public class DynamicRuleDTO {
     private UUID productId;
     private String productName;
     private String productText;
-    private Set<QueryDTO> rules;
+    private Set<QueryDTO> queries;
 }

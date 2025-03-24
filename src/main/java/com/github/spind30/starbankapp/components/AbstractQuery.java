@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.UUID;
 
 public abstract class AbstractQuery {
-    protected final boolean negate;
-    protected final RecommendationsRepository recommendationRepo;
 
     @Autowired
-    protected AbstractQuery(RecommendationsRepository recommendationRepo, boolean negate) {
-        this.recommendationRepo = recommendationRepo;
+    protected RecommendationsRepository recommendationRepo;
+    protected boolean negate;
+
+
+    @Autowired
+    public void setNegate(boolean negate) {
         this.negate = negate;
     }
 

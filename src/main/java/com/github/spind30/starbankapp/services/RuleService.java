@@ -1,5 +1,6 @@
 package com.github.spind30.starbankapp.services;
 
+import com.github.spind30.starbankapp.model.rule.DynamicRule;
 import com.github.spind30.starbankapp.repository.RuleRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -21,23 +22,22 @@ public class RuleService {
     private final RuleRepository ruleRepository;
 
     @Transactional
-    public Rule createRule(Rule rule) {
+    public DynamicRule createRule(DynamicRule dynamicRule) {
         logger.info("Правило сохранено");
-        return ruleRepository.save(rule);
+        return ruleRepository.save(dynamicRule);
     }
 
     public void deleteRule(UUID id) {
         ruleRepository.deleteById(id);
     }
 
-    public List<Rule> getAllRules() {
+    public DynamicRule editRule(DynamicRule dynamicRule) {
+       return ruleRepository.save(dynamicRule);
+    }
+
+    public List<DynamicRule> getAllRules() {
         return ruleRepository.findAll();
     }
 
-    // Проверка выполнения правила для пользователя
-    public boolean checkRuleForUser(UUID userId, Rule rule) {
-        // Реализация проверки выполнения правила (логика зависит от типа запроса)
-        // Здесь можно использовать SQL-запросы или другие механизмы для проверки условий
-        return true; // Placeholder для демонстрации
-    }
+
 }

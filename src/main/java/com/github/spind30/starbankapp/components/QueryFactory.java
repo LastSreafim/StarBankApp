@@ -15,18 +15,16 @@ public class QueryFactory {
     @Autowired
     private RecommendationsRepository recommendationRepo;
 
-    public AbstractQuery createQuery(QueryType queryType, boolean negate, List<String> arguments) {
+    public AbstractQuery from(QueryType queryType, List<String> arguments, boolean negate) {
         switch (queryType) {
             case USER_OF:
-                return new UserOfQuery(recommendationRepo, negate);
+                return new UserOfQuery();
             case ACTIVE_USER_OF:
-                return new ActiveUserOfQuery(recommendationRepo, negate);
+                return new ActiveUserOfQuery();
             case TRANSACTION_SUM_COMPARE:
-                return new TransactionSumCompareQuery(recommendationRepo,
-                        negate);
+                return new TransactionSumCompareQuery();
             case TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW:
-                return new TransactionSumCompareDepositWithdrawQuery(recommendationRepo,
-                        negate);
+                return new TransactionSumCompareDepositWithdrawQuery();
             default:
                 throw new IllegalArgumentException("Unsupported query type: " + queryType);
         }

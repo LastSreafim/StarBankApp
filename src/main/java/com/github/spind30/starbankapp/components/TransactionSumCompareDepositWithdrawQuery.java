@@ -14,9 +14,8 @@ import java.util.UUID;
 public class TransactionSumCompareDepositWithdrawQuery extends AbstractQuery {
 
     @Autowired
-    public TransactionSumCompareDepositWithdrawQuery(@Qualifier("recommendationsRepository") RecommendationsRepository repository,
-                                       boolean negate) {
-        super(repository, negate);
+    public TransactionSumCompareDepositWithdrawQuery() {
+        super();
     }
 
     @Override
