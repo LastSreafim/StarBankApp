@@ -47,10 +47,10 @@ public class RecommendationService {
         return rule.getRules().stream()
                 .map(query -> {
                     AbstractQuery abstractQuery = QueryFactory.from(query.getQueryType(), query.getArguments(), query.isNegate());
-                    return abstractQuery.perform(userId, query.getArguments()); // Передаём аргументы из оригинального query
+                    return abstractQuery.perform(userId, query.getArguments());
                 })
-                .reduce((a, b) -> a && b) // Объединяем результаты через AND
-                .orElse(false); // Если список пуст, вернуть false
+                .reduce((a, b) -> a && b)
+                .orElse(false);
     }
 
 
