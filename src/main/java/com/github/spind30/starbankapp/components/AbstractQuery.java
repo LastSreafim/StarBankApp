@@ -1,20 +1,18 @@
 package com.github.spind30.starbankapp.components;
 
 import com.github.spind30.starbankapp.repository.RecommendationsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.util.List;
 import java.util.UUID;
 
 public abstract class AbstractQuery {
 
-    @Autowired
-    protected RecommendationsRepository recommendationRepo;
-    protected boolean negate;
+    protected final RecommendationsRepository recommendationRepo;
+    protected final boolean negate;
 
-
-    @Autowired
-    public void setNegate(boolean negate) {
+    public AbstractQuery(RecommendationsRepository recommendationRepo, boolean negate) {
+        this.recommendationRepo = recommendationRepo;
         this.negate = negate;
     }
 
@@ -23,9 +21,9 @@ public abstract class AbstractQuery {
         return negate ? !result : result;
     }
 
-
     protected abstract boolean performInternal(UUID userId, RecommendationsRepository repo,
                                                List<String> arguments);
 }
+
 
 

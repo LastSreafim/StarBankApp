@@ -12,14 +12,19 @@ import java.util.UUID;
 public class UserOfQuery extends AbstractQuery {
 
     @Autowired
-    public UserOfQuery() {
-        super();
+    public UserOfQuery(RecommendationsRepository recommendationRepo, boolean negate) {
+        super(recommendationRepo, false);
     }
 
     @Override
-    protected boolean performInternal(UUID userId, RecommendationsRepository repo, List<String> arguments) {
+    protected boolean performInternal(UUID userId, RecommendationsRepository repo,
+                                      List<String> arguments) {
+        if (arguments.isEmpty()) {
+            throw new IllegalArgumentException("Arguments list cannot be empty");
+        }
         ProductType productType = ProductType.fromString(arguments.getFirst());
         return repo.getTransactionCount(userId, productType.name()) > 0;
     }
 }
+
 

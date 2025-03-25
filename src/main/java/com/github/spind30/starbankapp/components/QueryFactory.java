@@ -11,20 +11,23 @@ import java.util.List;
 @Component
 public class QueryFactory {
 
+    private static RecommendationsRepository recommendationRepo;
 
     @Autowired
-    private RecommendationsRepository recommendationRepo;
+    public QueryFactory(RecommendationsRepository recommendationRepo) {
+        this.recommendationRepo = recommendationRepo;
+    }
 
-    public AbstractQuery from(QueryType queryType, List<String> arguments, boolean negate) {
+    public static AbstractQuery from(QueryType queryType, List<String> arguments, boolean negate) {
         switch (queryType) {
             case USER_OF:
-                return new UserOfQuery();
+                return new UserOfQuery(recommendationRepo, negate);
             case ACTIVE_USER_OF:
-                return new ActiveUserOfQuery();
+                return new ActiveUserOfQuery(recommendationRepo, negate);
             case TRANSACTION_SUM_COMPARE:
-                return new TransactionSumCompareQuery();
+                return new TransactionSumCompareQuery(recommendationRepo, negate);
             case TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW:
-                return new TransactionSumCompareDepositWithdrawQuery();
+                return new TransactionSumCompareDepositWithdrawQuery(recommendationRepo, negate);
             default:
                 throw new IllegalArgumentException("Unsupported query type: " + queryType);
         }

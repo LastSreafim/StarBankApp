@@ -1,5 +1,6 @@
 package com.github.spind30.starbankapp.model.rule;
 
+import com.github.spind30.starbankapp.model.Recommendation;
 import com.github.spind30.starbankapp.model.queries.Query;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,4 +25,8 @@ public class DynamicRule {
 
     @OneToMany(mappedBy = "dynamicRule", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Query> rules;
+
+    public Recommendation toRecommendation() {
+        return new Recommendation(productName, productId, productText);
+    }
 }

@@ -1,8 +1,10 @@
 package com.github.spind30.starbankapp.services;
 
+import com.github.spind30.starbankapp.components.AbstractQuery;
 import com.github.spind30.starbankapp.components.QueryFactory;
 import com.github.spind30.starbankapp.dto.DynamicRuleDTO;
 import com.github.spind30.starbankapp.model.Recommendation;
+import com.github.spind30.starbankapp.model.queries.Query;
 import com.github.spind30.starbankapp.model.rule.DynamicRule;
 import com.github.spind30.starbankapp.repository.RecommendationsRepository;
 import com.github.spind30.starbankapp.repository.RuleRepository;
@@ -13,12 +15,13 @@ import org.springframework.stereotype.Service;
 import ruleset.RecommendationRuleSet;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class RecommendationService {
 
-    List <RecommendationRuleSet> recommendationRules;
+    List<RecommendationRuleSet> recommendationRules;
 
     private static final Logger logger = LoggerFactory.getLogger(RecommendationService.class);
 
@@ -30,34 +33,25 @@ public class RecommendationService {
 
     private final QueryFactory queryFactory;
 
-//    public RecommendationDTO getRecommendations(UUID userId) {
-//        List<Recommendation> recommendations = new ArrayList<>();
-//        for (RecommendationRuleSet rule : recommendationRules) {
-//            rule.getRecommendation(userId)
-//                    .ifPresent(recommendations::add);
-//        }
-//        logger.info("Найдено {} рекомендаций", recommendations.size());
-//
-//        return new RecommendationDTO(userId, recommendations);
-//    }
 
-    public Recommendation getRecommendations(UUID userId) {
-        List<DynamicRule> rules = ruleRepository.findAll()
+    public List<Recommendation> getRecommendations(UUID userId) {
+        return ruleRepository.findAll()
                 .stream()
-                .map(it -> process(it, userId))
-                .collect() => List<Recommendation>
-
-    }
-
-    public boolean process(DynamicRule it, UUID userId) {
-        return rule.getQueries()
-                .map(QueryFactory::from)  // Создаём Query-объекты
-                .map(it -> it.perform(...))  // Выполняем запросы
-        .reduce((a, b) -> a && b)  // Объединяем результаты
-                .orElse(false);  // Если список пуст, вернуть false
+                .filter(it -> process(it, userId))
+                .map(DynamicRule::toRecommendation)
+                .collect(Collectors.toList());
     }
 
 
+    public boolean process(DynamicRule rule, UUID userId) {
+        return rule.getRules().stream()
+                .map(query -> {
+                    AbstractQuery abstractQuery = QueryFactory.from(query.getQueryType(), query.getArguments(), query.isNegate());
+                    return abstractQuery.perform(userId, query.getArguments()); // Передаём аргументы из оригинального query
+                })
+                .reduce((a, b) -> a && b) // Объединяем результаты через AND
+                .orElse(false); // Если список пуст, вернуть false
+    }
 
 
 }

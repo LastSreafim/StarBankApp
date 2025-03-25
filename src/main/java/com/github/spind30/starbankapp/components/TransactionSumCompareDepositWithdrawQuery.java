@@ -4,7 +4,6 @@ import com.github.spind30.starbankapp.model.enums.CompareType;
 import com.github.spind30.starbankapp.model.enums.ProductType;
 import com.github.spind30.starbankapp.repository.RecommendationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,8 +13,8 @@ import java.util.UUID;
 public class TransactionSumCompareDepositWithdrawQuery extends AbstractQuery {
 
     @Autowired
-    public TransactionSumCompareDepositWithdrawQuery() {
-        super();
+    public TransactionSumCompareDepositWithdrawQuery(RecommendationsRepository recommendationRepo, boolean negate) {
+        super(recommendationRepo, false);;
     }
 
     @Override
