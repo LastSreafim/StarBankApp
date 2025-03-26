@@ -3,6 +3,7 @@ package com.github.spind30.starbankapp.controllers;
 import com.github.spind30.starbankapp.model.Recommendation;
 import com.github.spind30.starbankapp.services.RecommendationService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/recommendation")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class RecommendationController {
     private final RecommendationService recommendationService;
 

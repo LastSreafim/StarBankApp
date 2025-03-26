@@ -22,7 +22,6 @@ public class DynamicRule {
     private String productName;
     private String productText;
 
-
     @OneToMany(mappedBy = "dynamicRule", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Query> rules;
 
