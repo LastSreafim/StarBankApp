@@ -1,5 +1,6 @@
 package com.github.spind30.starbankapp.controllers;
 
+import com.github.spind30.starbankapp.model.rule.DynamicRule;
 import com.github.spind30.starbankapp.services.RuleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class RuleController {
     private final RuleService ruleService;
 
     @PostMapping
-    public ResponseEntity<Rule> createRule(@RequestBody Rule rule) {
+    public ResponseEntity<DynamicRule> createRule(@RequestBody DynamicRule rule) {
         ruleService.createRule(rule);
         return ResponseEntity.ok().build();
     }
@@ -29,8 +30,8 @@ public class RuleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Rule>> getAllRules() {
-        List<Rule> rules = ruleService.getAllRules();
+    public ResponseEntity<List<DynamicRule>> getAllRules() {
+        List<DynamicRule> rules = ruleService.getAllRules();
         return ResponseEntity.ok(rules);
     }
 }

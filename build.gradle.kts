@@ -3,7 +3,9 @@ plugins {
     id("org.springframework.boot") version "3.4.2"
     id("io.spring.dependency-management") version "1.1.7"
     id("io.swagger.core.v3.swagger-gradle-plugin") version "2.2.28"
+
 }
+
 
 group = "com.github.sp-ind30"
 version = "0.0.1-SNAPSHOT"
