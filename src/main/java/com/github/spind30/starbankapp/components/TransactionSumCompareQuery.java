@@ -14,7 +14,8 @@ import java.util.UUID;
 public class TransactionSumCompareQuery extends AbstractQuery {
 
     @Autowired
-    public TransactionSumCompareQuery() {
+    public TransactionSumCompareQuery(RecommendationsRepository recommendationsRepository) {
+        super(recommendationsRepository);
     }
 
     @Override

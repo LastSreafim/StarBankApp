@@ -12,5 +12,5 @@ public class DynamicRuleDTO {
     private UUID productId;
     private String productName;
     private String productText;
-    private Set<QueryDTO> queries;
+    private Set<QueryDTO> rule;
 }

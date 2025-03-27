@@ -32,8 +32,8 @@ public class RecommendationService {
 
 
     public boolean process(DynamicRule rule, UUID userId) {
-        Set<Query> queries = rule.getRules();
-        return rule.getRules().stream()
+        Set<Query> queries = rule.getRule();
+        return rule.getRule().stream()
                 .map(query -> {
                     AbstractQuery abstractQuery = QueryFactory.from(query.getQueryType(), query.getArguments(), query.isNegate());
                     return abstractQuery.perform(userId, query.getArguments());

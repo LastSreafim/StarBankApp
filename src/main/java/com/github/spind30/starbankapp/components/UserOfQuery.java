@@ -12,7 +12,8 @@ import java.util.UUID;
 public class UserOfQuery extends AbstractQuery {
 
     @Autowired
-    public UserOfQuery() {
+    public UserOfQuery(RecommendationsRepository recommendationsRepository) {
+        super(recommendationsRepository);
     }
 
     @Override

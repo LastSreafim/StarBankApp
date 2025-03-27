@@ -21,13 +21,13 @@ public class QueryFactory {
     public static AbstractQuery from(QueryType queryType, List<String> arguments, boolean negate) {
         switch (queryType) {
             case USER_OF:
-                return new UserOfQuery();
+                return new UserOfQuery(recommendationRepo);
             case ACTIVE_USER_OF:
-                return new ActiveUserOfQuery();
+                return new ActiveUserOfQuery(recommendationRepo);
             case TRANSACTION_SUM_COMPARE:
-                return new TransactionSumCompareQuery();
+                return new TransactionSumCompareQuery(recommendationRepo);
             case TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW:
-                return new TransactionSumCompareDepositWithdrawQuery();
+                return new TransactionSumCompareDepositWithdrawQuery(recommendationRepo);
             default:
                 throw new IllegalArgumentException("Unsupported query type: " + queryType);
         }

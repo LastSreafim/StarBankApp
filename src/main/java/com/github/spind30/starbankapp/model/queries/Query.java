@@ -1,20 +1,22 @@
 package com.github.spind30.starbankapp.model.queries;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.spind30.starbankapp.model.enums.QueryType;
 import com.github.spind30.starbankapp.model.rule.DynamicRule;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "queries")
+@ToString(exclude = "dynamicRule")
+@EqualsAndHashCode(exclude = "dynamicRule")
 public class Query {
 
     @Id
@@ -23,6 +25,7 @@ public class Query {
     private Integer id;
 
     @Enumerated(EnumType.STRING)
+    @JsonProperty ("query")
     private QueryType queryType;
 
     private List<String> arguments;
@@ -34,4 +37,5 @@ public class Query {
 
     private boolean negate;
 }
+
 

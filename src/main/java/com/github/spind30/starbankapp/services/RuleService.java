@@ -23,9 +23,13 @@ public class RuleService {
 
     @Transactional
     public DynamicRule createRule(DynamicRule dynamicRule) {
+        if (dynamicRule.getRule() != null) {
+            dynamicRule.getRule().forEach(query -> query.setDynamicRule(dynamicRule));
+        }
         logger.info("Правило сохранено");
         return ruleRepository.save(dynamicRule);
     }
+
 
     public void deleteRule(UUID id) {
         ruleRepository.deleteById(id);

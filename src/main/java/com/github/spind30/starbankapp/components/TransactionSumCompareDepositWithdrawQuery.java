@@ -13,14 +13,15 @@ import java.util.UUID;
 public class TransactionSumCompareDepositWithdrawQuery extends AbstractQuery {
 
     @Autowired
-    public TransactionSumCompareDepositWithdrawQuery() {
+    public TransactionSumCompareDepositWithdrawQuery(RecommendationsRepository recommendationsRepository) {
+        super(recommendationsRepository);
     }
 
     @Override
     protected boolean performInternal(UUID userId, RecommendationsRepository repo, List<String> arguments) {
         // Получаем аргументы
         ProductType productType = ProductType.fromString(arguments.get(0)); // Тип продукта, например "DEBIT"
-        CompareType compareType = CompareType.fromString(arguments.get(2));
+        CompareType compareType = CompareType.fromString(arguments.get(1));
 
         // Получаем сумму транзакций с типом DEPOSIT и WITHDRAW для указанного продукта
         long depositSum = repo.getTransactionAmount(userId, productType.name(), "DEPOSIT");

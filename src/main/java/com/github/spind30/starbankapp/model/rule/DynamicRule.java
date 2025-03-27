@@ -1,31 +1,41 @@
 package com.github.spind30.starbankapp.model.rule;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.spind30.starbankapp.model.Recommendation;
 import com.github.spind30.starbankapp.model.queries.Query;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "dynamic_rules")
+@ToString(exclude = "rule")
+@EqualsAndHashCode(exclude = "rule")
 public class DynamicRule {
 
-    @Id
-    private UUID productId;
+    @JsonProperty("product_name")
     private String productName;
+    @Id
+    @JsonProperty("product_id")
+    private UUID productId;
+    @JsonProperty("product_text")
     private String productText;
 
     @OneToMany(mappedBy = "dynamicRule", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Query> rules;
+    private Set<Query> rule;
 
     public Recommendation toRecommendation() {
         return new Recommendation(productName, productId, productText);
     }
 }
+
+
+
+
