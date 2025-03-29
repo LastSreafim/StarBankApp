@@ -1,8 +1,6 @@
 package com.github.spind30.starbankapp.components;
 
-import com.github.spind30.starbankapp.model.Recommendation;
-import com.github.spind30.starbankapp.repository.RecommendationsRepository;
-import com.github.spind30.starbankapp.model.Recommendation;
+import com.github.spind30.starbankapp.dto.Recommendation;
 import com.github.spind30.starbankapp.repository.RecommendationsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.github.spind30.starbankapp.model;
+package com.github.spind30.starbankapp.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -21,7 +21,8 @@ public abstract class AbstractQuery {
         return negate ? !result : result;
     }
 
-    protected abstract boolean performInternal(UUID userId, RecommendationsRepository repo, List<String> arguments);
+    protected abstract boolean performInternal(UUID userId, RecommendationsRepository repo,
+                                               List<String> arguments);
 }
 
 

@@ -1,12 +1,13 @@
 package com.github.spind30.starbankapp.controllers;
 
-import com.github.spind30.starbankapp.model.rule.DynamicRule;
+import com.github.spind30.starbankapp.dto.DynamicRuleDTO;
 import com.github.spind30.starbankapp.services.RuleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -17,11 +18,10 @@ public class RuleController {
     private final RuleService ruleService;
 
     @PostMapping
-    public ResponseEntity<DynamicRule> createRule(@RequestBody DynamicRule rule) {
-        ruleService.createRule(rule);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<DynamicRuleDTO> createRule(@RequestBody DynamicRuleDTO ruleDTO) {
+        DynamicRuleDTO createdRule = ruleService.createRule(ruleDTO);
+        return ResponseEntity.ok(createdRule);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRule(@PathVariable UUID id) {
@@ -30,8 +30,10 @@ public class RuleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DynamicRule>> getAllRules() {
-        List<DynamicRule> rules = ruleService.getAllRules();
-        return ResponseEntity.ok(rules);
+    public ResponseEntity<Map<String, List<DynamicRuleDTO>>> getAllRules() {
+        List<DynamicRuleDTO> rules = ruleService.getAllRules();
+        return ResponseEntity.ok(Map.of("data", rules));
     }
+
 }
+

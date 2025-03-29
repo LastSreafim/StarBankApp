@@ -37,7 +37,7 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.2")
     runtimeOnly("org.postgresql:postgresql:42.7.2")
     implementation("org.liquibase:liquibase-core")
-
+    implementation("com.github.ben-manes.caffeine:caffeine:3.1.5")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

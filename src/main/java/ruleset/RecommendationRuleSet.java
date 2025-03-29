@@ -1,7 +1,7 @@
 package ruleset;
 
 
-import com.github.spind30.starbankapp.model.Recommendation;
+import com.github.spind30.starbankapp.dto.Recommendation;
 
 import java.util.Optional;
 import java.util.UUID;
