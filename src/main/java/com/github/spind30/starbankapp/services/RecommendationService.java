@@ -1,36 +1,56 @@
 package com.github.spind30.starbankapp.services;
 
-import com.github.spind30.starbankapp.dto.RecommendationDTO;
-import com.github.spind30.starbankapp.model.Recommendation;
-import com.github.spind30.starbankapp.repository.RecommendationsRepository;
-import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.github.spind30.starbankapp.components.AbstractQuery;
+import com.github.spind30.starbankapp.components.QueryFactory;
+import com.github.spind30.starbankapp.dto.DynamicRuleDTO;
+import com.github.spind30.starbankapp.dto.Recommendation;
+import com.github.spind30.starbankapp.model.enums.QueryType;
+import com.github.spind30.starbankapp.repository.RuleRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ruleset.RecommendationRuleSet;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Slf4j
 public class RecommendationService {
 
-    List <RecommendationRuleSet> recommendationRules;
+    private final RuleRepository ruleRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(RecommendationService.class);
 
-    private final RecommendationsRepository recommendationsRepository;
+    @Transactional
+    public List<Recommendation> getRecommendations(UUID userId) {
 
-    public RecommendationDTO getRecommendations(UUID userId) {
-        List<Recommendation> recommendations = new ArrayList<>();
-        for (RecommendationRuleSet rule : recommendationRules) {
-            rule.getRecommendation(userId)
-                    .ifPresent(recommendations::add);
-        }
-        logger.info("Найдено {} рекомендаций", recommendations.size());
+        List<DynamicRuleDTO> rules = ruleRepository.findAll()
+                .stream()
+                .map(DynamicRuleDTO::fromEntity)
+                .toList();
 
-        return new RecommendationDTO(userId, recommendations);
+        return rules.stream()
+                .filter(ruleDTO -> process(ruleDTO, userId))
+                .map(this::toRecommendation)
+                .collect(Collectors.toList());
     }
 
 
+    public boolean process(DynamicRuleDTO ruleDTO, UUID userId) {
+        return ruleDTO.getRule().stream()
+                .map(queryDTO -> {
+                    // Здесь вам нужно создать AbstractQuery и выполнить проверку на основании QueryDTO
+                    AbstractQuery abstractQuery = QueryFactory.from(QueryType.valueOf(queryDTO.getQuery()), queryDTO.getArguments(), queryDTO.isNegate());
+                    return abstractQuery.perform(userId, queryDTO.getArguments());
+                })
+                .reduce((a, b) -> a && b)
+                .orElse(false);
+    }
+
+
+    public Recommendation toRecommendation(DynamicRuleDTO ruleDTO) {
+        return new Recommendation(ruleDTO.getProductName(), ruleDTO.getProductId(), ruleDTO.getProductText());
+    }
 }
+
