@@ -27,6 +27,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-web")
     compileOnly("org.projectlombok:lombok")
@@ -40,6 +41,11 @@ dependencies {
     implementation("com.github.ben-manes.caffeine:caffeine:3.1.5")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation("com.github.pengrad:java-telegram-bot-api:5.7.0")
+}
+
+springBoot {
+    buildInfo()
 }
 
 tasks.withType<Test> {

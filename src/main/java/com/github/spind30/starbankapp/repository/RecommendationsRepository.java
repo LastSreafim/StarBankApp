@@ -74,7 +74,6 @@ public class RecommendationsRepository {
                 transactionType
         );
 
-
         if (result != null) {
             transactionAmountCache.put(cacheKey, result);
         }

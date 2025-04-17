@@ -27,6 +27,11 @@ CREATE TABLE IF NOT EXISTS public.queries
 
 CREATE INDEX IF NOT EXISTS idx_queries_dynamic_rule_id ON public.queries (dynamic_rule_id);
 
+CREATE TABLE IF NOT EXISTS rule_stat (
+    rule_id UUID PRIMARY KEY,
+    count INT DEFAULT 0
+);
+
 
 
 

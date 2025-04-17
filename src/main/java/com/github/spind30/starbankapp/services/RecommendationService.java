@@ -9,6 +9,7 @@ import com.github.spind30.starbankapp.repository.RuleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,6 +21,8 @@ public class RecommendationService {
 
     private final RuleRepository ruleRepository;
 
+
+    @Transactional
     public List<Recommendation> getRecommendations(UUID userId) {
 
         List<DynamicRuleDTO> rules = ruleRepository.findAll()
