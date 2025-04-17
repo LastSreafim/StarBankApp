@@ -1,10 +1,10 @@
 package com.github.spind30.starbankapp.components;
 
-import com.github.spind30.starbankapp.model.Recommendation;
+import com.github.spind30.starbankapp.dto.Recommendation;
 import com.github.spind30.starbankapp.repository.RecommendationsRepository;
+import com.github.spind30.starbankapp.ruleset.RecommendationRuleSet;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import ruleset.RecommendationRuleSet;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -33,18 +33,13 @@ public class TopSavingRecommendation implements RecommendationRuleSet {
                             "«Копилка» — это уникальный банковский инструмент, " +
                             "который поможет вам легко и удобно накапливать деньги на важные цели. " +
                             "Больше никаких забытых чеков и потерянных квитанций — всё под контролем!" +
-                            "\n" +
-                            "Преимущества «Копилки»:\n" +
-                            "\n" +
+                            "Преимущества «Копилки»:" +
                             "Накопление средств на конкретные цели. " +
-                            "Установите лимит и срок накопления, и банк будет автоматически переводить определенную сумму на ваш счет.\n" +
-                            "\n" +
+                            "Установите лимит и срок накопления, и банк будет автоматически переводить определенную сумму на ваш счет." +
                             "Прозрачность и контроль. Отслеживайте свои доходы и расходы, " +
-                            "контролируйте процесс накопления и корректируйте стратегию при необходимости.\n" +
-                            "\n" +
+                            "контролируйте процесс накопления и корректируйте стратегию при необходимости." +
                             "Безопасность и надежность. Ваши средства находятся под защитой банка, " +
-                            "а доступ к ним возможен только через мобильное приложение или интернет-банкинг.\n" +
-                            "\n" +
+                            "а доступ к ним возможен только через мобильное приложение или интернет-банкинг." +
                             "Начните использовать «Копилку» уже сегодня и станьте ближе к своим финансовым целям!"
             ));
         }
